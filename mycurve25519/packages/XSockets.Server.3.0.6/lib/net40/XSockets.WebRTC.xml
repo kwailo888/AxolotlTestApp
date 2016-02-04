@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XSockets.WebRTC</name>
+    </assembly>
+    <members>
+        <member name="T:XSockets.WebRTC.Broker">
+            <summary>
+            A custom Peerbroker for WebRTC signaling and WebSocket communication on top of XSockets.NET
+            </summary>
+        </member>
+        <member name="M:XSockets.WebRTC.IBroker.ContextSignal(XSockets.WebRTC.Models.SignalingModel)">
+            <summary>
+            Distribute signals (SDP's)
+            </summary>
+            <param name="signalingModel"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.IBroker.OnMessage(XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Give this controller a "Generic" behavior
+            </summary>
+            <param name="textArgs"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.IBroker.LeaveContext">
+            <summary>
+            Leave a context
+            </summary>
+        </member>
+        <member name="M:XSockets.WebRTC.IBroker.OfferContext(System.Guid)">
+            <summary>
+            Send and contect offer to a Peer
+            </summary>
+            <param name="recipient">Recipient</param>
+        </member>
+        <member name="M:XSockets.WebRTC.IBroker.DenyContext(System.Guid)">
+            <summary>
+            Deny a context offer
+            </summary>
+            <param name="recipient">Recipient</param>
+        </member>
+        <member name="M:XSockets.WebRTC.IBroker.ChangeContext(System.Guid)">
+            <summary>
+            Current client changes context
+            </summary>
+            <param name="contextId"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.IBroker.DisconnectPeer(System.Guid)">
+            <summary>
+            Remove another peer by id
+            </summary>
+            <param name="recipient"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.IBroker.RemoveStream(System.String)">
+            <summary>
+            Notify PeerConnections on the current context that a MediaStream is removed.
+            </summary>
+            <param name="streamId"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.IBroker.AddStream(System.String,System.String)">
+            <summary>
+            Notify PeerConnections on the current context that a MediaStream is added.
+            </summary>
+            <param name="streamId"></param>
+            <param name="description">JSON</param>
+        </member>
+        <member name="P:XSockets.WebRTC.IBroker.Connections">
+            <summary>
+            List of PeerConnections that the Current PeerConnections has connected to
+            </summary>
+        </member>
+        <member name="P:XSockets.WebRTC.IBroker.Peer">
+            <summary>
+            The Peer of this connection
+            </summary>
+        </member>
+        <member name="M:XSockets.WebRTC.Broker.#ctor">
+            <summary>
+            Ctor - setting up connectionlist and open/close events
+            </summary>
+        </member>
+        <member name="M:XSockets.WebRTC.Broker._OnOpen(System.Object,XSockets.Core.Common.Socket.Event.Arguments.OnClientConnectArgs)">
+            <summary>
+            When a client connects create a new PeerConnection and send the information the the client
+            </summary>
+            <param name="sender"></param>
+            <param name="onClientConnectArgs"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.Broker._OnClose(System.Object,XSockets.Core.Common.Socket.Event.Arguments.OnClientDisconnectArgs)">
+            <summary>
+            When a client disconnects tell the other clients about the Peer being lost
+            </summary>
+            <param name="sender"></param>
+            <param name="onClientDisConnectArgs"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.Broker.OnMessage(XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Give this controller a "Generic" behavior
+            Any object sent (that do not have an action method) in will be sent out to the clients subscribing to the topic.
+            </summary>
+            <param name="textArgs"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.Broker.ContextSignal(XSockets.WebRTC.Models.SignalingModel)">
+            <summary>
+            Distribute signals (SDP's)
+            </summary>
+            <param name="signalingModel"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.Broker.LeaveContext">
+            <summary>
+            Leave a context
+            </summary>
+        </member>
+        <member name="M:XSockets.WebRTC.Broker.OfferContext(System.Guid)">
+            <summary>
+                Send and contect offer to a Peer
+            </summary>
+            <param name="recipient">Recipient</param>
+        </member>
+        <member name="M:XSockets.WebRTC.Broker.DenyContext(System.Guid)">
+            <summary>
+                Deny a context offer
+            </summary>
+            <param name="recipient">Recipient</param>
+        </member>
+        <member name="M:XSockets.WebRTC.Broker.ChangeContext(System.Guid)">
+            <summary>
+               Current client changes context
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.Broker.DisconnectPeer(System.Guid)">
+            <summary>
+            
+            </summary>
+            <param name="recipient"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.Broker.RemoveStream(System.String)">
+            <summary>
+            Notify PeerConnections on the current context that a MediaStream is removed.
+            </summary>
+            <param name="streamId"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.Broker.AddStream(System.String,System.String)">
+            <summary>
+            Notify PeerConnections on the current context that a MediaStream is added.
+            </summary>
+            <param name="streamId"></param>
+            <param name="description">JSON</param>
+        </member>
+        <member name="P:XSockets.WebRTC.Broker.Connections">
+            <summary>
+            List of PeerConnections that the Peer has connected to
+            </summary>
+        </member>
+        <member name="P:XSockets.WebRTC.Broker.Peer">
+            <summary>
+            The Peer for this client
+            </summary>
+        </member>
+        <member name="T:XSockets.WebRTC.Constants.Events">
+            <summary>
+            Constants for the events used in communication
+            </summary>
+        </member>
+        <member name="T:XSockets.WebRTC.Extentions.ContextHelper">
+            <summary>
+            Extension for finding and signaling clients
+            </summary>
+        </member>
+        <member name="M:XSockets.WebRTC.Extentions.ContextHelper.NotifyContextChange``1(``0,System.Guid)">
+            <summary>
+            Send a ContextChanged event to the clients on the context
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.Extentions.ContextHelper.NotifyContextChange``1(``0,System.Guid,System.Action)">
+            <summary>
+            Send a ContextChanged event to the clients on the context and then fires the callback action
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj"></param>
+            <param name="context"></param>
+            <param name="callback"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.Extentions.ContextHelper.ConnectToContext``1(``0)">
+            <summary>
+            Sends a Contect Connect event to all clients connected to this Peer
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj"></param>
+        </member>
+        <member name="M:XSockets.WebRTC.Extentions.ContextHelper.Connections``1(``0,XSockets.WebRTC.Models.IPeerConnection)">
+            <summary>
+            Find all clients connected to the context except for the "calling" client
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj"></param>
+            <param name="peerConnection"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XSockets.Plugin.Framework</name>
+    </assembly>
+    <members>
+        <member name="M:XSockets.Plugin.Framework.AssemblyExtensions.GetActivationAttributes``1(System.Reflection.Assembly)">
+            <summary>
+            Return all the attributes of a given type from an assembly
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="assembly"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XSockets.Plugin.Framework.Attributes.MetadataExportAttribute">
+            <summary>
+            Inherit this attribute and attach it on the exporting class to export metadata with your regular export.
+            Then in the import use the WithMetaData class to import your export together with the metadata.
+            </summary>
+        </member>
+        <member name="T:XSockets.Plugin.Framework.Composable">
+            <summary>
+            Handles the composition of exports and imports
+            </summary>
+        </member>
+        <member name="F:XSockets.Plugin.Framework.Composable.ComputedKeys">
+            <summary>
+            Holds computed Guids for all types since class Guids are missing in Mono
+            </summary>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Composable.#cctor">
+            <summary>
+            Ctor - Setup for first usage
+            </summary>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Composable.RegisterExport``1">
+            <summary>
+                Lets you register additional Exports into the plugin framework.
+                This method have to be called prior to any usage of the plugin framework.
+                After registration you will not be forced to have an export attribute on your plugin.
+                You can get an instance by using the Composable.GetExport(s) method(s)
+            
+                If used after first call to GetExport(s) you have to call recompose to load the new types.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Composable.AddMetaDataMapping``2">
+            <summary>
+            Some types might demand a MetaDataExportAttribute..
+            Use this method to tell the plugin framework the default MetaDataExportAttribute to create when it is missing.
+            </summary>
+            <typeparam name="TK">Interface</typeparam>
+            <typeparam name="TV">Class that inherits MetaDataExportAttribute</typeparam>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Composable.ReCompose">
+            <summary>
+            Reload all types, will add new exports/imports if you have used registerexport or added new assemblies at runtime.
+            </summary>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Composable.GetExport``1">
+            <summary>
+            Will return a single instance the implements the interface T.
+            If more than one instance is found an exception will be thrown
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Composable.GetExports``1">
+            <summary>
+            Will retrieve all exports found that implements the interface T
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Composable.AddLocation(System.String,System.IO.SearchOption,System.Boolean)">
+            <summary>
+            Will load all assemblies in the location.
+            Use searchOption to include subfolder as well.
+            
+            Will throw exception if the load of an assemblies fails
+            </summary>
+            <param name="assemblyLocation"></param>
+            <param name="searchOption"></param>
+            <param name="ignoreException"></param>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Composable.LoadAssembly(System.String)">
+            <summary>
+            Loads additional assemblies. Will be used for scenarios of runtime re-composition    
+            Returns false if load failed.   
+            </summary>
+            <param name="assemblyPath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Composable.LoadAssemblyClassExports(System.Reflection.Assembly)">
+            <summary>
+            Loads exported types.... This have to be called after LoadAssemblyInterfaceExports
+            </summary>
+            <param name="assembly"></param>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Composable.Compose``1(``0)">
+            <summary>
+            If not using GetExport or GetExports you can use Compose to satisfy all imports of an object
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj"></param>
+        </member>
+        <member name="P:XSockets.Plugin.Framework.Composable.ExportableInterfaces">
+            <summary>
+                Interfaces that you want the plugin framework to know about. You wont need the export attribute for these types.
+                Everything implementing these will become a plugin.
+            </summary>
+        </member>
+        <member name="P:XSockets.Plugin.Framework.Composable.ExportedTypes">
+            <summary>
+            All found exports
+            </summary>
+        </member>
+        <member name="P:XSockets.Plugin.Framework.Composable.PluginCatalog">
+            <summary>
+            If a plugin catalog is used this is the one...
+            Set the key "XSockets.PluginCatalog" in the config to point to the target folder.
+            Leave empty to get bin folder.
+            </summary>
+        </member>
+        <member name="P:XSockets.Plugin.Framework.Composable.LoadedAssemblies">
+            <summary>
+            The assemblies loaded by the plugin framework.
+            </summary>
+        </member>
+        <member name="T:XSockets.Plugin.Framework.ExportedType">
+            <summary>
+            Describes an exported type (interface).
+            Each exported type (interface) have a list of PluginType that defines the instances that is exported (not the interfaces)
+            </summary>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.ExportedType.AddExport(XSockets.Plugin.Framework.PluginType)">
+            <summary>
+            Add a concrete export for this interface
+            </summary>
+            <param name="pluginType"></param>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.ExportedType.GetExports">
+            <summary>
+            Get all exports for this interface.
+            Calling this will return all Exported plugins for this interface.
+            Should be used on types that have importtype of Many
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.ExportedType.GetExport">
+            <summary>
+            Get a single export.
+            This will return the FirstOrDefault exported type.
+            Should be used on types that have importtype of One
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:XSockets.Plugin.Framework.ExportedType.Interface">
+            <summary>
+            The Exported Interface
+            </summary>
+        </member>
+        <member name="P:XSockets.Plugin.Framework.ExportedType.TypeName">
+            <summary>
+            The Name of The Exported Interface
+            </summary>
+        </member>
+        <member name="P:XSockets.Plugin.Framework.ExportedType.ExportedTypes">
+            <summary>
+            The Concrete exports for this interface
+            </summary>
+        </member>
+        <member name="T:XSockets.Plugin.Framework.Helpers.PluginHelpers">
+            <summary>
+            Plugin framework helpers...
+            </summary>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Helpers.PluginHelpers.ComposeMe``1(``0)">
+            <summary>
+            Will compose all imports of T
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="o"></param>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Helpers.PluginHelpers.GetAttributeOfType``1(System.Reflection.PropertyInfo)">
+            <summary>
+            Extracts the first attribute of type T from a Propertyinfo object
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="pp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Helpers.PluginHelpers.GetPropertiesWithAttributeOfType``1(System.Type)">
+            <summary>
+            Return the propertirs that implements a certain attribute on a type
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Helpers.PluginHelpers.GetPropertiesWithAttributeOfType``2(System.Type)">
+            <summary>
+            Return the propertirs that implements a either attribute T or TA on a type
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TA"></typeparam>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Plugin.Framework.Helpers.PluginHelpers.IsExport(System.Type)">
+            <summary>
+            Checks if a type has the export attribute set
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XSockets.Plugin.Framework.ImportType">
+            <summary>
+            Telling the composer how to build the object
+            One will be a single instance, and Many will create a list
+            </summary>
+        </member>
+        <member name="T:XSockets.Plugin.Framework.InstancePolicy">
+            <summary>
+            Will the plugin framework create a new instance on demand or use a singleton
+            </summary>
+        </member>
+        <member name="T:XSockets.Plugin.Framework.PluginRange">
+            <summary>
+            Decides how visible a plugin is.
+            In XSockets case this decides if a controller is a longrunningn or regular controller
+            </summary>
+        </member>
+        <member name="T:XSockets.Plugin.Framework.Rewritable">
+            <summary>
+            Decides if a plugin can be replaced by creating your custom type/implementation
+            </summary>
+        </member>
+        <member name="T:XSockets.Plugin.Framework.WithMetaData`2">
+            <summary>
+            Class for connecting imports with both an export as well as exported metadata.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TMetaData"></typeparam>
+        </member>
+    </members>
+</doc>

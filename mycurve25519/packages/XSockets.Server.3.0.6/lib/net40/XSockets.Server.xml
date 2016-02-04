@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XSockets.Server</name>
+    </assembly>
+    <members>
+        <member name="T:XSockets.Server.Cluster.ClusterController">
+            <summary>
+            Controller for cluster communication
+            </summary>    
+        </member>
+        <member name="M:XSockets.Server.Cluster.ServerSibling.#ctor(System.String)">
+            <summary>
+            </summary>
+            <param name="url">scheme://ip:port</param>        
+        </member>
+        <member name="M:XSockets.Server.Cluster.ServerSibling.Close">
+            <summary>
+                Close the current connection
+            </summary>
+        </member>
+        <member name="M:XSockets.Server.Cluster.ServerSibling.Create(System.Action{System.Collections.Generic.List{System.Byte},XSockets.Core.Common.Protocol.FrameType})">
+            <summary>
+            </summary>
+            <param name="onCompleted"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Server.Cluster.ServerSibling.ReceiveData(System.Collections.Generic.List{System.Byte},XSockets.Core.Common.Protocol.IReadState,System.Action{XSockets.Core.Common.Protocol.FrameType,System.Byte[]})">
+            <summary>
+            </summary>
+            <param name="data"></param>
+            <param name="readState"></param>
+            <param name="processFrame"></param>
+        </member>
+        <member name="M:XSockets.Server.Cluster.ServerSibling.Recive">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:XSockets.Server.Cluster.ServerSibling.Read(System.Collections.Generic.List{System.Byte},System.Byte[])">
+            <summary>
+            </summary>
+            <param name="data"></param>
+            <param name="buffer"></param>
+        </member>
+        <member name="T:XSockets.Server.Cluster.SiblingPool">
+            <summary>
+            Acts as a wrapper and abstraction for XWebSocket.
+            If you are only publishing this is the class to use
+            </summary>
+        </member>
+        <member name="M:XSockets.Server.Cluster.SiblingPool.Send(XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Send prepared ITextArgs to all siblings...
+            </summary>
+            <param name="textArgs"></param>
+        </member>
+        <member name="M:XSockets.Server.Cluster.SiblingPool.Send(System.Object,System.String)">
+            <summary>
+            Send any object, with an eventname... will be transformed into a ITextArgs
+            </summary>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+        </member>
+        <member name="T:XSockets.Server.XSocketServer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:XSockets.Server.XSocketServer.#ctor(XSockets.Core.Common.Socket.IProtocolHandshakeHandler)">
+            <summary>
+            Instantiate a new web socket server
+            </summary>
+            <param name="handshakeHandler"></param>      
+        </member>
+        <member name="M:XSockets.Server.XSocketServerContainer.#ctor">
+            <summary>
+            Ctor
+            </summary>
+        </member>
+        <member name="M:XSockets.Server.XSocketServerContainer.StartServers(System.Boolean,System.Boolean,System.Collections.Generic.IList{XSockets.Core.Common.Configuration.IConfigurationSetting})">
+            <summary>
+            
+            </summary>        
+            <param name="useLoopback">Will start on 127.0.0.1 as well</param>
+            <param name="withInterceptors">Will enable interceptors for errors, messages and connections</param>
+            <param name="configurationSettings"></param>
+        </member>
+    </members>
+</doc>

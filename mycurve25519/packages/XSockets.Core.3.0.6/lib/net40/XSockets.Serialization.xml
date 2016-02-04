@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XSockets.Serialization</name>
+    </assembly>
+    <members>
+        <member name="T:XSockets.Serialization.XSocketJsonSerializer">
+            <summary>
+            The default plugin for serialization
+            To have your custom serializer implement IXSocketJsonSerializer
+            </summary>
+        </member>
+    </members>
+</doc>

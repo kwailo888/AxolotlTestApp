@@ -1,0 +1,1044 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XSockets.Core</name>
+    </assembly>
+    <members>
+        <member name="M:XSockets.Core.Configuration.ConfigurationSetting.GetOrigins(System.String)">
+            <summary>
+            Get the trusted origins from the WorkerRole settings
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.Configuration.ConfigurationSetting.GetIpEndPoint(System.String)">
+            <summary>
+            Returns a IpEndpoint to a DNS, the DNS should be provided in the form protocol://mydomain.com:port or protocol://ipaddress:port
+            Example ws://xsockets.net:4502 or ws://192.168.1.7:4502
+            </summary>
+            <param name="dns"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XSockets.Core.Utility.MessageQueue.MessageWrapper`1">
+            <summary>
+            A wrapper for queuing messages for offline users.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:XSockets.Core.Utility.MessageQueue.QueueHelper`1">
+            <summary>
+            The helpers for queing and sending messages
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:XSockets.Core.Utility.Storage.Repository`2">
+            <summary>
+            A static generic repository for in-memory storage
+            </summary>
+            <typeparam name="TK">Key Type</typeparam>
+            <typeparam name="T">Value Type</typeparam>
+        </member>
+        <member name="T:XSockets.Core.Utility.Storage.RepositoryInstance`2">
+            <summary>
+            A non-static generic repository for in-memory storage
+            </summary>
+            <typeparam name="TK">Key Type</typeparam>
+            <typeparam name="T">Value Type</typeparam>
+        </member>
+        <member name="T:XSockets.Core.XSocket.XSocketController">
+            <summary>
+            The base class for all controllers
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.OnAuthorization(XSockets.Core.Common.Socket.Attributes.AuthorizeAttribute)">
+            <summary>
+            Will be called when ever a client tries to run a actionmethod with the Authorize attribute     
+            Override this method to implement custom authorization for     
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.OnMessage(XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Override this method to intercept all text-messages (events) that does not have a actionmethod
+            </summary>
+            <param name="textArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.OnMessage(XSockets.Core.Common.Socket.Event.Interface.IBinaryArgs)">
+            <summary>
+            Override this method to intercept all binary-messages (events) that does not have a actionmethod     
+            </summary>
+            <param name="binaryArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.Available">
+            <summary>
+            Returns true if the clients socket still is connected
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.Close">
+            <summary>
+            Call this to terminate the connection
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.Open">
+            <summary>
+            Do not invoke this. XSockets uses it after handshake etc
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.GetSubscribers``1(System.String)">
+            <summary>
+            Retrieves all subscribers for a specific event
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="event"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.GetSubscribersReadOnly``1(System.String)">
+            <summary>
+            Retrieves all subscribers for a specific event as a list
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="event"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.SubscribesTo(System.String)">
+            <summary>
+            Checks if the client subscribes to a specific event
+            </summary>
+            <param name="event"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.Subscribe(XSockets.Core.XSocket.Model.XSubscriptions)">
+            <summary>
+            Adds a new subscription for the client
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.Unsubscribe(XSockets.Core.XSocket.Model.XSubscriptions)">
+            <summary>
+            Removes a subscription for the client
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.StorageSet(XSockets.Core.XSocket.Model.XStorage)">
+            <summary>
+            Add a new in-memory item to the clients storage
+            </summary>
+            <param name="storage"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.StorageGet(XSockets.Core.XSocket.Model.XStorage)">
+            <summary>
+            Get an item from the in-memory storage
+            </summary>
+            <param name="storage"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.StorageGetAll">
+            <summary>
+            Get all items stored in-memory for the client
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketController.StorageRemove(XSockets.Core.XSocket.Model.XStorage)">
+            <summary>
+            Remove an in-memory item from the clients storage
+            </summary>
+            <param name="storage"></param>
+        </member>
+        <member name="P:XSockets.Core.XSocket.XSocketController.Subscriptions">
+            <summary>
+            All subscriptions for the client
+            </summary>
+        </member>
+        <member name="E:XSockets.Core.XSocket.XSocketController.OnOpen">
+            <summary>
+            Will fire after the handshake when the connection is open.
+            </summary>
+        </member>
+        <member name="E:XSockets.Core.XSocket.XSocketController.OnReopen">
+            <summary>
+            Will fire after the handshake when the connection is open and the client is reconnecting.
+            Will fire after OnOpen
+            </summary>
+        </member>
+        <member name="E:XSockets.Core.XSocket.XSocketController.OnClose">
+            <summary>
+            Will fore when a connection is closed
+            </summary>
+        </member>
+        <member name="E:XSockets.Core.XSocket.XSocketController.OnError">
+            <summary>
+            Will fire when there is an internal error
+            </summary>
+        </member>
+        <member name="E:XSockets.Core.XSocket.XSocketController.OnAuthorizationFailed">
+            <summary>
+            Will fire when authorization failed
+            </summary>
+        </member>
+        <member name="T:XSockets.Core.XSocket.Helpers.XSocketHelper">
+            <summary>
+            Extension methods for IXBaseSocket
+            You can write your own if you do not find what you need in the extensions.
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendJsonToAllInternal``1(``0,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Internal - Sends the ITextArgs to all connected IXNodes on the current IXBaseSocket (handler).
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the handler</typeparam>
+            <param name="socket">The instance of a IXBaseSocket (handler)</param>
+            <param name="data">The ITextArgs to send</param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.GetCookie(XSockets.Core.Common.Socket.IXSocketController,System.String)">
+            <summary>
+            Returns the value of a named parameter passed into the connection.        
+            </summary>
+            <param name="socket"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.HasCookieKey(XSockets.Core.Common.Socket.IXSocketController,System.String)">
+            <summary>
+            Verifies that a named parameter exists.
+            </summary>
+            <param name="socket"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.InvokePluginMethod``1(``0,System.Reflection.MethodInfo,System.Object[])">
+            <summary>
+            Invokes a method on a IXBaseSocket (handler)
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the handler</typeparam>
+            <param name="plugin">The instance of a IXBaseSocket (handler)</param>
+            <param name="methodInfo">Method info for the method to be called</param>
+            <param name="parameters">Parameters to send to the method being invoked</param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.InvokePluginMethod``1(``0,XSockets.Core.Common.Socket.Event.Interface.IPluginCustomEventInfo,System.String)">
+            <summary>
+            Invokes a method on a IXBaseSocket (handler) and also tries to perform strongly typed model binding
+            by transforming the data parameter into the prefered parametertype.
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the handler</typeparam>
+            <param name="plugin">The instance of a IXBaseSocket (handler)</param>
+            <param name="pluginMethodInfo">Information about the method on the handler (cached on server start)</param>
+            <param name="data">The string that will be converted to a strongly typed parameter</param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.InvokePluginMethod``1(``0,XSockets.Core.Common.Socket.Event.Interface.IPluginCustomEventInfo)">
+            <summary>
+            Invokes a method on a IXBaseSocket (handler). No parameters on the method.        
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the handler</typeparam>
+            <param name="plugin">The instance of a IXBaseSocket (handler)</param>
+            <param name="pluginMethodInfo">Information about the method on the handler (cached on server start)</param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.InvokePluginMethod``1(``0,XSockets.Core.Common.Socket.Event.Interface.IPluginCustomEventInfo,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Invokes a method on a IXBaseSocket (handler).
+            If the method invoked takes a XSocketEvent as parameter, that will be sent.
+            Else the method will send the XSocketEvent.Data to be model binded to a strongly typed parameter on the method.
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the handler</typeparam>
+            <param name="plugin">The instance of a IXBaseSocket (handler)</param>
+            <param name="pluginMethodInfo">Information about the method on the handler (cached on server start)</param>
+            <param name="e">The XSocketEvent and/or Data to be sent</param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.GetParameter(XSockets.Core.Common.Socket.IXSocketController,System.String)">
+            <summary>
+            Returns the value of a named parameter passed into the connection.        
+            </summary>
+            <param name="socket"></param>
+            <param name="parameterName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.HasParameterKey(XSockets.Core.Common.Socket.IXSocketController,System.String)">
+            <summary>
+            Verifies that a named parameter exists.
+            </summary>
+            <param name="socket"></param>
+            <param name="parameterName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendError``1(System.Exception,``0,System.String)">
+            <summary>
+            Sends an error to the client
+            </summary>
+            <param name="ex"></param>
+            <param name="handler"></param>
+            <param name="customMessage"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendError``1(System.Exception,``0)">
+            <summary>
+            Sends an error to the client
+            </summary>
+            <param name="ex"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendError``1(``0,System.Exception)">
+            <summary>
+            Sends an error to the client
+            </summary>
+            <param name="handler"></param>
+            <param name="ex"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendError``1(``0,System.Exception,System.String)">
+            <summary>
+            Sends an error to the client
+            </summary>
+            <param name="handler"></param>
+            <param name="ex"></param>
+            <param name="customMessage"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendError``1(``0,System.String)">
+            <summary>
+            Sends an error to the client
+            </summary>
+            <param name="handler"></param>
+            <param name="customMessage"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.RouteErrorTo``1(``0,System.Exception,System.String)">
+            <summary>
+            Sends an error internally to a controller. Good for sending errors to a controller that handles all errors or a logger etc.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="handler"></param>        
+            <param name="ex"></param>
+            <param name="customMessage"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.OnlinePublish``1(``0)">
+            <summary>
+            Retrieves messages that arrived when the client was offline and sends them to the client.
+            Will only send messages that was subscribed to using the OfflineSubscribe method
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.OfflineSubscribe``1(``0,System.String[])">
+            <summary>
+            Tells the framework to store messages for the client while he/she is offline. 
+            By default messages are stored for 30000 milliseconds           
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="subjects"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.OfflineSubscribe``1(``0,System.Int32,System.String[])">
+            <summary>
+            Tells the framework to store messages for the client while he/she is offline.
+            By default messages are stored for 30000 milliseconds
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="timeoutMs"></param>
+            <param name="subjects"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.Queue``1(``0,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Queue a message so that it can be retrieved by users that is currently offline
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="message"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.Queue``1(``0,XSockets.Core.Common.Socket.Event.Interface.ITextArgs,System.Func{``0,System.Boolean})">
+            <summary>
+            Queue a message with a condition so that it can be retrieved by users with correct condition that is currently offline
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="message"></param>
+            <param name="f"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAllAndQueue``1(``0,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Send a message to all subscribers and also queue the message for the configured time (see OfflineSubscribe) for users being offline or between connections
+            </summary>
+            <param name="socket"></param>
+            <param name="message"></param>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAllAndQueue``1(``0,System.Object,System.String)">
+            <summary>
+            Send a message to all subscribers and also queue the message for the configured time (see OfflineSubscribe) for users being offline or between connections
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAndQueue``1(``0,XSockets.Core.Common.Socket.Event.Interface.ITextArgs,System.Func{``0,System.Boolean})">
+            <summary>
+            Send a message to a subset of subscribers and also queue the message for the configured time (see OfflineSubscribe) for users being offline or between connections
+            </summary>
+            <param name="socket"></param>
+            <param name="message"></param>
+            <param name="f"></param>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAndQueue``1(``0,System.Object,System.String,System.Func{``0,System.Boolean})">
+            <summary>
+            Send a message to a subset of subscribers and also queue the message for the configured time (see OfflineSubscribe) for users being offline or between connections
+            </summary>
+            <param name="socket"></param>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+            <param name="f"></param>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.StorageSet(XSockets.Core.Common.Socket.IXSocketController,System.String,System.Object)">
+            <summary>
+            Adds a new value to the key in the storage for the XNode.
+            If the key already exists the value will be updated.
+            </summary>
+            <param name="socket">IXBaseSocket a.k.a the handler</param>
+            <param name="key">The key that will keep track on your value</param>
+            <param name="value">The value to store</param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.StorageGet(XSockets.Core.Common.Socket.IXSocketController,System.String)">
+            <summary>
+            Returns the stored value to the corresponding key for the XNode.
+            If there is no such key stored a null value will be returned.
+            </summary>
+            <param name="socket">IXBaseSocket a.k.a the handler</param>
+            <param name="key">The key looked for in the XNode storage</param>
+            <returns>value (object)</returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.StorageGetAllItems(XSockets.Core.Common.Socket.IXSocketController)">
+            <summary>
+            Returns all stored key/value pairs for the XNode.
+            </summary>
+            <param name="socket">IXBaseSocket a.k.a the handler</param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.StorageRemove(XSockets.Core.Common.Socket.IXSocketController,System.String)">
+            <summary>
+            Removes key and value from the XNode if it exists.
+            </summary>
+            <param name="socket"></param>
+            <param name="key"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.AsCombinedMessage(XSockets.Core.Common.Socket.Event.Interface.IBinaryArgs)">
+            <summary>
+            Will separate the regular ITextArgs from the IBinaryArgs. Will also let you extract the type T represented in the ITextArgs.data property
+            </summary>
+            <param name="binaryArgs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.ToTextArgs``1(``0,System.Object,System.String)">
+            <summary>
+            The recommended method to use for serializing to ITextArgs.
+            This uses the JsonSerializer on the controller and that will save time!
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.ToTextArgs(XSockets.Core.Common.Socket.IXSocketController,System.Object,System.String)">
+            <summary>
+            The recommended method to use for serializing to ITextArgs.
+            This uses the JsonSerializer on the controller and that will save time!
+            </summary>
+            <param name="socket"></param>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.AsTextArgs(System.Object,System.String)">
+            <summary>
+            If possible use the extension-method ToTextArgs for the controller instead
+            </summary>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.AsTextArgsForJson(System.String,System.String)">
+            <summary>
+            Builds a ITextArgs object from a JSON string and a event name
+            </summary>
+            <param name="json"></param>
+            <param name="eventname"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.AsBinaryArgs(System.Byte[],System.String)">
+            <summary>
+            Use when sending binary data
+            </summary>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.Deserialize``1(System.String)">
+            <summary>
+            Deserialize JSON to a strongly typed object
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="json"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.Serialize(System.Object)">
+            <summary>
+            If possible use the extension-method ToTextArgs for the controller instead
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.GetObject(System.Type,System.String)">
+            <summary>
+            Deserialize JSON to a strongly typed object.
+            </summary>
+            <param name="targetType"></param>
+            <param name="json"></param>
+            <returns></returns>
+        </member>
+        <member name="F:XSockets.Core.XSocket.Helpers.XSocketHelper.ProcessorCount">
+            <summary>
+            Keeps track of processors for parallell tasks
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.Send``1(``0,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Sends a message to the current client
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="textArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAllExceptMe``1(``0,System.Object,System.String)">
+            <summary>
+            Sends a message to everyone listening, but the one one triggering the message
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAllExceptMe``1(``0,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Sends a message to everyone listening, except for the one triggering the message
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="textArgs"> </param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToOthers``1(``0,System.Object,System.String)">
+            <summary>
+            Sends a message to everyone listening, except for the one triggering the message
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToOthers``1(``0,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Sends a message to everyone listening, except for the one triggering the message
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="textArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAllExcept``1(``0,System.Collections.Generic.IList{``0},System.Object,System.String)">
+            <summary>
+            Send a message to all listening except a specified list of clients
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="clients"></param>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAllExcept``1(``0,System.Collections.Generic.IList{``0},XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Send a message to all listening except a specified list of clients
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="clients"></param>
+            <param name="textArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAllExcept``1(``0,System.Func{``0,System.Boolean},System.Object,System.String)">
+            <summary>
+            Send a message to all listening except for clients hit by a lambda expression
+            </summary>
+            <typeparam name="TA"></typeparam>
+            <param name="socket"></param>
+            <param name="expression"></param>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAllExcept``1(``0,System.Func{``0,System.Boolean},XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Send a message to all listening except for clients hit by a lambda expression
+            </summary>
+            <typeparam name="TA"></typeparam>
+            <param name="socket"></param>
+            <param name="expression"></param>
+            <param name="textArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.RouteTo``1(XSockets.Core.Common.Socket.IXSocketController,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Sends/Routes an message to a controller
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="textArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.RouteTo``1(XSockets.Core.Common.Socket.IXSocketController,System.Object,System.String)">
+            <summary>
+            Sends/Routes an message to a controller
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.RouteTo(XSockets.Core.Common.Socket.IXSocketController,System.String,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Sends/Routes an message to a controller
+            </summary>
+            <param name="socket"></param>
+            <param name="controller"></param>
+            <param name="textArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.RouteTo``1(``0,XSockets.Core.Common.Socket.Event.Interface.IBinaryArgs)">
+            <summary>
+            Sends/Routes an message to a controller
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="binaryArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.RouteTo``1(``0,System.Byte[],System.String)">
+            <summary>
+            Sends/Routes an message to a controller
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendTo``1(``0,System.Collections.Generic.IEnumerable{``0},XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Send a message to a list of clients
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="clients"></param>
+            <param name="textArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendTo``1(``0,System.Collections.Generic.IEnumerable{``0},System.Object,System.String)">
+            <summary>
+            Send a message to a list of clients
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="clients"></param>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAll``1(``0,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Send a message to all subscribers
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="data"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAll``1(XSockets.Core.Common.Socket.IXSocketController,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Send a message to all subscribers of the event connected to controller T.
+            Note that this can be another controller-type than the socket.
+            If you want the message to land on another controller use RouteTo instead
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="textArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAll``1(XSockets.Core.Common.Socket.IXSocketController,System.Object,System.String)">
+            <summary>
+            Send a message to all subscribers of the event connected to controller T.
+            Note that this can be another controller-type than the socket.
+            If you want the message to land on another controller use RouteTo instead
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.AsyncSend``1(``0,XSockets.Core.Common.Socket.Event.Interface.ITextArgs,System.AsyncCallback)">
+            <summary>
+            Asynchronous Sends the ITextArgs to the IXBaseSocket (controller).
+            Also calls the callback on completion.
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the controller</typeparam>
+            <param name="socket">The instance of a IXBaseSocket (controller)</param>
+            <param name="textArgs">The ITextArgs to send</param>
+            <param name="callback">The AsyncCallback method</param>
+            <returns>IAsyncResult</returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.AsyncSendTo``1(``0,System.Func{``0,System.Boolean},XSockets.Core.Common.Socket.Event.Interface.ITextArgs,System.AsyncCallback)">
+            <summary>
+            Asynchronous Sends the ITextArgs to the clients identified by the condition/expression.
+            Also calls the provided callback on completion.
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the controller</typeparam>
+            <param name="socket">The instance of a IXBaseSocket (controller)</param>
+            <param name="expression">The expression for selecting IXNodes</param>
+            <param name="textArgs">The ITextArgs to send</param>
+            <param name="callback">The AsyncCallback method</param>
+            <returns>IAsyncResult</returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.AsyncSendToAll``1(``0,XSockets.Core.Common.Socket.Event.Interface.ITextArgs,System.AsyncCallback)">
+            <summary>
+            Asynchronous sends the ITextArgs object to all connected clients on the current IXBaseSocket (controller).
+            Also calls the provided callback on completion.
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the controller</typeparam>
+            <param name="socket">The instance of a IXBaseSocket (controller)</param>
+            <param name="textArgs">The ITextArgs to send</param>
+            <param name="callback">The AsyncCallback method</param>
+            <returns>IAsyncResult</returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.Send``1(``0,System.Object,System.String)">
+            <summary>
+            Sends an object as a object to the IXBaseSocket (controller).
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the controller</typeparam>
+            <param name="socket">The instance of a IXBaseSocket (controller)</param>
+            <param name="obj">The object to send (can be anonymous or strongly typed)</param>
+            <param name="eventname">The eventname to publish the send with</param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendTo``1(``0,System.Func{``0,System.Boolean},System.Object,System.String)">
+            <summary>
+            Sends the object as a ITextArgs to the clients identified by the condition/expression.
+            You´ll have to provide the eventname for the published event.
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the controller</typeparam>
+            <param name="socket">The instance of a IXBaseSocket (controller)</param>
+            <param name="expression">The expression for selecting IXNodes</param>
+            <param name="obj">The object to send (can be anonymous or strongly typed)</param>
+            <param name="eventname">The eventname to publish the send with</param>        
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAll``1(``0,System.Object,System.String)">
+            <summary>
+            Send a message to all subscribers
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.AsyncSend``1(``0,System.Object,System.String,System.AsyncCallback)">
+            <summary>
+            Asynchronous Sends an object as a ITextArgs object to the IXBaseSocket (controller) with a eventname that have to be specified.
+            Also calls the provided callback on completion.
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the controller</typeparam>
+            <param name="socket">The instance of a IXBaseSocket (controller)</param>
+            <param name="data">The object to send, will be converted to a XSocketEvent</param>
+            <param name="eventname">The eventname being used in the publish</param>
+            <param name="callback">The AsyncCallback method</param>
+            <returns>IAsyncResult</returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.AsyncSendTo``1(``0,System.Func{``0,System.Boolean},System.Object,System.String,System.AsyncCallback)">
+            <summary>
+            Asynchronous sends the object as a ITextArgs object to the clients identified by the condition/expression.
+            Also calls the provided callback on completion.
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the controller</typeparam>
+            <param name="socket">The instance of a IXBaseSocket (controller)</param>
+            <param name="expression">The expression for selecting IXNodes</param>
+            <param name="obj">The object to send (can be anonymous or strongly typed)</param>
+            <param name="eventname">The eventname to publish the send with</param>   
+            <param name="callback">The method to call on completion</param>
+            <returns>IAsyncResult</returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.AsyncSendToAll``1(``0,System.Object,System.String,System.AsyncCallback)">
+            <summary>
+            Asynchronous sends the object as a ITextArgs object to all connected clients on the current IXBaseSocket (controller) with a eventname that have to be specified.
+            Also calls the provided callback on completion.
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the controller</typeparam>
+            <param name="socket">The instance of a IXBaseSocket (controller)</param>
+            <param name="obj">The anonymous or strongly typed object</param>
+            <param name="eventname">The eventname to publish the send with</param>
+            <param name="callback">The AsyncCallback method</param>
+            <returns>IAsyncResult</returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendJson``1(``0,System.String,System.String)">
+            <summary>
+            Send a already prepeared JSON statement.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="json"></param>
+            <param name="eventname"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAll``1(``0,System.String,System.String)">
+            <summary>
+            Send a message to all subscribers
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="text"></param>
+            <param name="eventname"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.AsyncSendTo``1(``0,System.Func{``0,System.Boolean},System.String,System.String,System.AsyncCallback)">
+            <summary>
+            Sends a message to clients by expression async and then executes the callback
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="expression"></param>
+            <param name="text"></param>
+            <param name="eventname"></param>
+            <param name="callback"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendToAll``1(``0,XSockets.Core.Common.Socket.Event.Interface.IBinaryArgs)">
+            <summary>
+            Sends a byte array to all connected clients on the current IXBaseSocket (controller).
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the controller</typeparam>
+            <param name="socket">The instance of a IXBaseSocket (controller)</param>
+            <param name="binaryArgs">The IBinaryArgs to send</param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.Send``1(``0,XSockets.Core.Common.Socket.Event.Interface.IBinaryArgs)">
+            <summary>
+            Sends a byte array to the clients on the current IXBaseSocket (controller).
+            </summary>
+            <typeparam name="T">IXBaseSocket a.k.a the controller</typeparam>
+            <param name="socket">The instance of a IXBaseSocket (controller)</param>
+            <param name="binaryArgs">The IBinaryArgs to send</param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendTo``1(``0,System.Collections.Generic.IList{``0},XSockets.Core.Common.Socket.Event.Interface.IBinaryArgs)">
+            <summary>
+            Sned a binary message to a list of clients
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="clients"></param>
+            <param name="binaryArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendTo``1(XSockets.Core.Common.Socket.IXSocketController,System.Func{``0,System.Boolean},XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Will send a message to clients connected to T.
+            Use this for sending to clients connected to another controller. 
+            For sending to clients in the current controller omit the type of T
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="expression"></param>
+            <param name="textArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendTo``1(XSockets.Core.Common.Socket.IXSocketController,System.Func{``0,System.Boolean},System.Object,System.String)">
+            <summary>
+            Will send a message to clients connected to T.
+            Use this for sending to clients connected to another controller. 
+            For sending to clients in the current controller omit the type of T 
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="expression"></param>
+            <param name="obj"></param>
+            <param name="eventname"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.SendTo``1(``0,System.Func{``0,System.Boolean},XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Send a message to clients targeted by the expression
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="expression"></param>
+            <param name="textArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.Find``1(``0,System.Func{``0,System.Boolean})">
+            <summary>
+            Find clients on the same controller based on the expression
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="client"></param>
+            <param name="expression"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.Find``1(``0)">
+            <summary>
+            Find all clients on the same controller
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="client"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.Find``1(``0,System.Func{``0,System.Boolean},System.Action{System.Collections.Generic.IEnumerable{``0}})">
+            <summary>
+            Find clients on the same controller based on the expression and then executes the action on the collection
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="expression"></param>
+            <param name="action"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.FindOn``1(XSockets.Core.Common.Socket.IXSocketController,System.Func{``0,System.Boolean})">
+            <summary>
+            Find clients on controller T based on the expression
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="client"></param>
+            <param name="expression"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.FindOn``1(XSockets.Core.Common.Socket.IXSocketController)">
+            <summary>
+            Find all clients on controller T        
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="client"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Helpers.XSocketHelper.FindOn``1(XSockets.Core.Common.Socket.IXSocketController,System.Func{``0,System.Boolean},System.Action{System.Collections.Generic.IEnumerable{``0}})">
+            <summary>
+            Find clients on controller T based on the expression and then executes the action on the collection
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="client"></param>
+            <param name="expression"></param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XSockets.Core.XSocket.ProtocolHandshakeHandler">
+            <summary>
+            Handles the handshaking between the client and the host, when a new connection is created
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.XSocket.ProtocolHandshakeHandler.Shake(XSockets.Core.Common.Socket.ISocketWrapper)">
+            <summary>
+            Handshakes with the connecting socket
+            </summary>
+            <param name="socket">The socket to send the handshake to</param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.ProtocolHandshakeHandler.GetController(XSockets.Core.Common.Socket.ISocketWrapper,XSockets.Core.Common.Protocol.IXSocketProtocol)">
+            <summary>
+            Implement your custom handshake by overriding this method.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:XSockets.Core.Utility.Observables.XSocketsObserverPool`1">
+            <summary>
+            Generic observer that needs a GUID to monitor objects.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:XSockets.Core.Utility.Observables.XSocketsObserverPool`1.XSocketObserver">
+            <summary>
+            Observer class
+            Will observe an object in the XSocketsObserverPool
+            Actions can be called onNotiy, onComplete and onError
+            </summary>
+        </member>
+        <member name="T:XSockets.Core.Utility.Observables.XSocketsObserverPool`1.XSocketObservable">
+            <summary>
+            Observable class
+            Will be called from the Observers Subscribe method
+            Will notify the Observer when 
+            </summary>
+        </member>
+        <member name="T:XSockets.Core.XSocket.Exceptions.XSocketException">
+            <summary>
+            Wrapper for exceptions.
+            </summary>
+        </member>
+        <member name="T:XSockets.Core.XSocket.CommunicationExtender">
+            <summary>
+            Provides direct access to other parts (plugins) of the framework
+            But you might as well you Composable.GetExport(s) your self
+            </summary>
+        </member>
+        <member name="T:XSockets.Core.XSocket.Model.XStorage">
+            <summary>
+            A object that can be stored in the in-memory storage
+            </summary>
+        </member>
+        <member name="P:XSockets.Core.XSocket.Model.XStorage.Key">
+            <summary>
+            The key value for the storage object
+            </summary>
+        </member>
+        <member name="P:XSockets.Core.XSocket.Model.XStorage.Value">
+            <summary>
+            The value of the storage object
+            </summary>
+        </member>
+        <member name="T:XSockets.Core.XSocket.Model.XSubscriptions">
+            <summary>
+            Used for storing subscription for the clients
+            </summary>
+        </member>
+        <member name="P:XSockets.Core.XSocket.Model.XSubscriptions.Event">
+            <summary>
+            The event to subscribe to
+            </summary>
+        </member>
+        <member name="P:XSockets.Core.XSocket.Model.XSubscriptions.Alias">
+            <summary>
+            The alias of the controller where the actionmethod is.
+            This is set by the framework.
+            </summary>
+        </member>
+        <member name="P:XSockets.Core.XSocket.Model.XSubscriptions.Confirm">
+            <summary>
+            If true the framework will send a callback when the subscription is registered in the server
+            </summary>
+        </member>
+        <member name="T:XSockets.Core.XSocket.Event.Dispatcher">
+            <summary>
+            The dispatcher... 
+            Decides if the message should end up on "OnMessage" or if there is a custom action method for the event.
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.XSocket.Event.Dispatcher.InvokeJson``1(``0,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            If the ITextArgs event is found as a action method it will be called.
+            Otherwise the OnMessage method will be fired on the base controller.
+            Override OnMessage to catch all events that does not have a action method
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="socket"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:XSockets.Core.XSocket.Wrapper.SocketWrapper">
+            <summary>
+            Handles socket communication
+            </summary>
+        </member>
+        <member name="T:XSockets.Core.XSocket.XSocketPipeline">
+            <summary>
+            The default pipeline for incomming messages.
+            To implement your custom pipeline inherit this class.
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketPipeline.OnMessage(XSockets.Core.Common.Socket.IXSocketController,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Override this method in your custom pipeline to be able to intercept text-messages
+            </summary>
+            <param name="controller"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketPipeline.OnMessage(XSockets.Core.Common.Socket.IXSocketController,XSockets.Core.Common.Socket.Event.Interface.IBinaryArgs)">
+            <summary>
+            Override this method in your custom pipeline to be able to intercept binary-messages
+            </summary>       
+            <param name="controller"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketPipeline.OnSend(XSockets.Core.Common.Protocol.IXSocketProtocol,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Override to catch and transform messages on the way out of the server.
+            </summary>
+            <param name="protocol"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:XSockets.Core.XSocket.XSocketPipeline.OnSend(XSockets.Core.Common.Protocol.IXSocketProtocol,XSockets.Core.Common.Socket.Event.Interface.IBinaryArgs)">
+            <summary>
+            Override to catch and transform messages on the way out of the server.
+            </summary>
+            <param name="protocol"></param>
+            <param name="e"></param>
+        </member>
+    </members>
+</doc>

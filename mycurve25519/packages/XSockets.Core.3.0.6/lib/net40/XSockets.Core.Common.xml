@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XSockets.Core.Common</name>
+    </assembly>
+    <members>
+        <member name="M:XSockets.Core.Common.Factories.IXSocketFactory.AddPlugin(XSockets.Core.Common.Socket.IXSocketController,XSockets.Core.Common.Socket.IXSocketMetadata)">
+            <summary>
+            Register a plugin in the factory and also sets custom events if there is any.
+            </summary>
+            <param name="plugin"></param>
+            <param name="metadata"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.Common.Factories.IXSocketProtocolFactory.AddPlugin(XSockets.Core.Common.Protocol.IXSocketProtocol,XSockets.Core.Common.Configuration.IConfigurationSetting)">
+            <summary>
+            Register a protocol in the factory
+            </summary>
+            <param name="protocol"></param>
+            <param name="configurationSetting"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.Common.Interceptor.IConnectionInterceptor.Connected(XSockets.Core.Common.Socket.Event.Arguments.OnClientConnectArgs)">
+            <summary>
+            Intercept connection to the server
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.Common.Interceptor.IConnectionInterceptor.Disconnected(XSockets.Core.Common.Socket.Event.Arguments.OnClientDisconnectArgs)">
+            <summary>
+            Intercept disconnection from the server
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.Common.Interceptor.IConnectionInterceptor.HandshakeCompleted(XSockets.Core.Common.Socket.Event.Arguments.OnHandshakeCompleteArgs)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.Common.Interceptor.IConnectionInterceptor.HandshakeInvalid(XSockets.Core.Common.Socket.Event.Arguments.OnHandshakeInvalidArgs)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.Common.Interceptor.IErrorInterceptor.OnError(XSockets.Core.Common.Socket.IXSocketController,XSockets.Core.Common.Socket.Event.Arguments.OnErrorArgs)">
+            <summary>
+            
+            </summary>
+            <param name="socket"></param>
+            <param name="errorArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.Common.Interceptor.IErrorInterceptor.OnError(XSockets.Core.Common.Socket.Event.Arguments.OnErrorArgs)">
+            <summary>
+            
+            </summary>
+            <param name="errorArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.Common.Interceptor.IMessageInterceptor.OnMessage(XSockets.Core.Common.Socket.IXSocketController,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Intercept text data being sent to the server
+            </summary>
+            <param name="socket"></param>
+            <param name="textArgs"> </param>
+        </member>
+        <member name="M:XSockets.Core.Common.Interceptor.IMessageInterceptor.OnMessage(XSockets.Core.Common.Socket.IXSocketController,XSockets.Core.Common.Socket.Event.Interface.IBinaryArgs)">
+            <summary>
+            Intercept binary data being sent to the server
+            </summary>
+            <param name="socket"></param>        
+            <param name="binaryArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.Common.Interceptor.IMessageInterceptor.OnSend(XSockets.Core.Common.Socket.IXSocketController,XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Intercept text messages being sent from the server
+            </summary>
+            <param name="socket"></param>
+            <param name="textArgs"> </param>
+        </member>
+        <member name="M:XSockets.Core.Common.Interceptor.IMessageInterceptor.OnSend(XSockets.Core.Common.Socket.IXSocketController,XSockets.Core.Common.Socket.Event.Interface.IBinaryArgs)">
+            <summary>
+            Intercept binary messages sent by the server
+            </summary>
+            <param name="socket"></param>
+            <param name="binaryArgs"></param>
+        </member>
+        <member name="M:XSockets.Core.Common.Protocol.IXSocketProtocol.SetPath">
+            <summary>
+            Find the controller part in the handshake and set the Path in this method
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.Common.Protocol.IXSocketProtocol.SetFields">
+            <summary>
+            If you are passing fields with the handshake, parse and set those in here
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.Common.Protocol.IXSocketProtocol.SetParameters">
+            <summary>
+            If you pass in parameters with the controller you can parse those here
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.Common.Protocol.IXSocketProtocol.OnIncomingTextFrame(System.Collections.Generic.List{System.Byte})">
+            <summary>
+            Override this to add custom logic for how you parse you incomming data into a ITextArgs.        
+            </summary>
+            <param name="payload"></param>
+        </member>
+        <member name="M:XSockets.Core.Common.Protocol.IXSocketProtocol.OnIncomingBinaryFrame(System.Collections.Generic.List{System.Byte})">
+            <summary>
+            Override this to add custom logic for how you parse you incomming data into a IBinaryArgs.        
+            </summary>
+            <param name="payload"></param>
+        </member>
+        <member name="M:XSockets.Core.Common.Protocol.IXSocketProtocol.OnOutgoingTextFrame(XSockets.Core.Common.Socket.Event.Interface.ITextArgs)">
+            <summary>
+            Override this method to transform the ITextArgs into any custom protocol object
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XSockets.Core.Common.Protocol.IXSocketProtocol.OnOutgoingBinaryFrame(XSockets.Core.Common.Socket.Event.Interface.IBinaryArgs)">
+            <summary>
+            Override this method to transform the IBinaryArgs into any custom protocol object
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:XSockets.Core.Common.Socket.Event.Attributes.ControllerEventAttribute">
+            <summary>
+            Attribute to set on methods on your plugins to implement custom handling to event aliases.
+            </summary>
+        </member>
+        <member name="P:XSockets.Core.Common.Socket.Event.Attributes.ControllerEventAttribute.Alias">
+            <summary>
+            The alias that will be used to call the method the attribute is attached to.
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.Common.Socket.IProtocolHandshakeHandler.Shake(XSockets.Core.Common.Socket.ISocketWrapper)">
+            <summary>
+            Shake hands with the connecting socket
+            </summary>
+            <param name="socket">The socket to send the handshake to</param>
+        </member>
+        <member name="M:XSockets.Core.Common.Socket.IXSocketClient.Bind(System.String,System.Action{XSockets.Core.Common.Socket.Event.Interface.ITextArgs})">
+            <summary>
+                Create a subscription
+            </summary>
+            <param name="name">Name of the subscription</param>
+            <param name="callback">Action to take</param>
+            <returns></returns>               
+        </member>
+        <member name="M:XSockets.Core.Common.Socket.IXSocketClient.UnBind(System.String)">
+            <summary>
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:XSockets.Core.Common.Socket.IXSocketClient.Close">
+            <summary>
+                Close the current connection
+            </summary>
+        </member>
+        <member name="M:XSockets.Core.Common.Socket.IXSocketClient.Send(XSockets.Core.Common.Socket.Event.Interface.ITextArgs,System.Action)">
+            <summary>
+                Send message
+            </summary>
+            <param name="payload">ITextArgs</param>
+            <param name="callback"> </param>
+        </member>
+        <member name="M:XSockets.Core.Common.Socket.IXSocketClient.Send(XSockets.Core.Common.Socket.Event.Interface.IBinaryArgs)">
+            <summary>
+                Send a binary message)
+            </summary>
+            <param name="payload">IBinaryArgs</param>
+        </member>
+    </members>
+</doc>
