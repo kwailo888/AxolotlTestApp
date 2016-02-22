@@ -37,7 +37,7 @@ namespace WhatsAppApi.Settings
         /// The whatsapp version the client complies to
         /// </summary>
 		//public const string WhatsAppVer = "2.13.21";
-        public const string WhatsAppVer = "JLS36C";
+        public const string WhatsAppVer = "2.12.440";
 
         /// <summary>
         /// The port that needs to be connected to
