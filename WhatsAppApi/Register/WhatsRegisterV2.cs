@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -20,7 +21,8 @@ namespace WhatsAppApi.Register
 
         public static string GetToken(string number)
         {
-            return WaToken.GenerateToken(number);
+            return WaToken.GenerateTokenAndroid(number);
+            // return WaToken.GenerateToken(number);
         }
 
         public static bool RequestCode(string phoneNumber, out string password, string method = "sms", string id = null)
@@ -49,9 +51,40 @@ namespace WhatsAppApi.Register
                 }
                 PhoneNumber pn = new PhoneNumber(phoneNumber);
                 string token = System.Uri.EscapeDataString(WhatsRegisterV2.GetToken(pn.Number));
-                
-				request = String.Format("https://v.whatsapp.net/v2/code?method={0}&in={1}&cc={2}&id={3}&lg={4}&lc={5}&token={6}&sim_mcc=000&sim_mnc=000", method, pn.Number, pn.CC, id, pn.ISO639, pn.ISO3166, token, pn.MCC, pn.MNC);
-                response = GetResponse(request);
+
+                byte[] sha256bytes = new byte[20]; new Random().NextBytes(sha256bytes);
+                NameValueCollection QueryStringParameters = new NameValueCollection();
+                QueryStringParameters.Add("cc", pn.CC);
+                QueryStringParameters.Add("in", pn.Number);
+                QueryStringParameters.Add("lg", pn.ISO639);
+                QueryStringParameters.Add("lc", pn.ISO3166);
+                QueryStringParameters.Add("id", id);
+                QueryStringParameters.Add("token", token);
+                QueryStringParameters.Add("mistyped", "6");
+                QueryStringParameters.Add("network_radio_type", "1");
+                QueryStringParameters.Add("simnum", "1");
+                QueryStringParameters.Add("s", "");
+                QueryStringParameters.Add("copiedrc", "1");
+                QueryStringParameters.Add("hasinrc", "1");
+                QueryStringParameters.Add("rcmatch", "1");
+                QueryStringParameters.Add("pid", new Random().Next(100, 9999).ToString());
+                QueryStringParameters.Add("rchash", BitConverter.ToString(HashAlgorithm.Create("sha256").ComputeHash(sha256bytes)));
+                QueryStringParameters.Add("anhash", BitConverter.ToString(HashAlgorithm.Create("md5").ComputeHash(sha256bytes)));
+                QueryStringParameters.Add("extexist", "1");
+                QueryStringParameters.Add("extstate", "1");
+                QueryStringParameters.Add("mcc", pn.MCC);
+                QueryStringParameters.Add("mnc", pn.MNC);
+                QueryStringParameters.Add("sim_mcc", pn.MCC);
+                QueryStringParameters.Add("sim_mnc", pn.MNC);
+                QueryStringParameters.Add("method", method);
+
+                NameValueCollection RequestHttpHeaders = new NameValueCollection();
+                RequestHttpHeaders.Add("User-Agent", WhatsConstants.UserAgent);
+                RequestHttpHeaders.Add("Accept", "text/json");
+
+                response = GetResponse("https://v.whatsapp.net/v2/code", QueryStringParameters, RequestHttpHeaders);
+                // request = String.Format("https://v.whatsapp.net/v2/code?method={0}&in={1}&cc={2}&id={3}&lg={4}&lc={5}&token={6}&sim_mcc=000&sim_mnc=000", method, pn.Number, pn.CC, id, pn.ISO639, pn.ISO3166, token, pn.MCC, pn.MNC);
+                // response = GetResponse(request);
                 password = response.GetJsonValue("pw");
                 if (!string.IsNullOrEmpty(password))
                 {
@@ -59,7 +92,7 @@ namespace WhatsAppApi.Register
                 }
                 return (response.GetJsonValue("status") == "sent");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 response = e.Message;
                 return false;
@@ -84,8 +117,8 @@ namespace WhatsAppApi.Register
                 }
                 PhoneNumber pn = new PhoneNumber(phoneNumber);
 
-				string uri = string.Format("https://v.whatsapp.net/v2/register?cc={0}&in={1}&id={2}&code={3}", pn.CC, pn.Number, id, code);
-				response = GetResponse(uri);
+                string uri = string.Format("https://v.whatsapp.net/v2/register?cc={0}&in={1}&id={2}&code={3}", pn.CC, pn.Number, id, code);
+                response = GetResponse(uri);
                 if (response.GetJsonValue("status") == "ok")
                 {
                     return response.GetJsonValue("pw");
@@ -127,6 +160,52 @@ namespace WhatsAppApi.Register
             {
                 return null;
             }
+        }
+
+        // BRIAN ADDED
+        private static string GetResponse(string url, NameValueCollection QueryStringParameters = null, NameValueCollection RequestHeaders = null)
+        {
+            string ResponseText = null;
+            using (WebClient client = new WebClient())
+            {
+                try
+                {
+                    if (RequestHeaders != null)
+                    {
+                        if (RequestHeaders.Count > 0)
+                        {
+                            foreach (string header in RequestHeaders.AllKeys)
+                                client.Headers.Add(header, RequestHeaders[header]);
+                        }
+                    }
+                    if (QueryStringParameters != null)
+                    {
+                        if (QueryStringParameters.Count > 0)
+                        {
+                            foreach (string parm in QueryStringParameters.AllKeys)
+                                client.QueryString.Add(parm, QueryStringParameters[parm]);
+                        }
+                    }
+                    byte[] ResponseBytes = client.DownloadData(url);
+                    ResponseText = Encoding.UTF8.GetString(ResponseBytes);
+                }
+                catch (WebException exception)
+                {
+                    if (exception.Response != null)
+                    {
+                        var responseStream = exception.Response.GetResponseStream();
+
+                        if (responseStream != null)
+                        {
+                            using (var reader = new System.IO.StreamReader(responseStream))
+                            {
+                                return reader.ReadToEnd();
+                            }
+                        }
+                    }
+                }
+            }
+            return ResponseText;
         }
 
         private static string GetResponse(string uri)
@@ -178,8 +257,8 @@ namespace WhatsAppApi.Register
                 )
                 {
                     //encode 
-                    sb.Append('%'); 
-                    sb.AppendFormat("{0:x2}", (byte)c); 
+                    sb.Append('%');
+                    sb.AppendFormat("{0:x2}", (byte)c);
                 }
                 else
                 {
@@ -203,7 +282,7 @@ namespace WhatsAppApi.Register
         {
             return new string(s.ToArray()).ToMD5String();
         }
- 
+
         private static string ToMD5String(this string s)
         {
             return string.Join(string.Empty, MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(s)).Select(item => item.ToString("x2")).ToArray());
